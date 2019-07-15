@@ -10,7 +10,7 @@ public class Debt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "creditor_id")
+    @ManyToOne
     private User user;
 
     private Double returned = 0.0;
