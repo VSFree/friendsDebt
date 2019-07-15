@@ -1,0 +1,12 @@
+ul.menu li {
+    display: inline;
+}
+
+.right-menu {
+    float: right;
+}
+
+.cont {
+    width: 80%;
+    margin: auto;
+}

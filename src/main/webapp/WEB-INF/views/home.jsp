@@ -3,14 +3,16 @@
 <html>
 <head>
     <title>HomePage</title>
-    <script src="<c:url value="/webjars/jquery/3.0.0/jquery.min.js"/>"></script>
-    <script src="<c:url value="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"/>"></script>
-
-    <link href="<c:url value="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>" rel="stylesheet">
+    <%@include file="./fragments/head.jspf" %>
 </head>
 <body>
+<%@include file="./fragments/header.jspf" %>
+
 <div class="container">
-    test
+Welcome ;/
+
 </div>
+
+<%--<%@include file="./fragments/footer.jspf"%>--%>
 </body>
 </html>
