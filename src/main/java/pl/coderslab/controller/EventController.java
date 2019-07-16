@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.entity.Event;
 import pl.coderslab.entity.EventGroups;
 import pl.coderslab.entity.User;
@@ -40,7 +42,7 @@ public class EventController {
         List<Event> eventList = new ArrayList<>();
         for (int i = 0; i < eventGroupsList.size(); i++) {
             Long id = eventGroupsList.get(i).getId();
-            if(!eventList.contains(eventRepository.getEventById(id))){
+            if (!eventList.contains(eventRepository.getEventById(id))) {
                 eventList.add(eventRepository.getEventById(id));
             }
         }
@@ -60,8 +62,9 @@ public class EventController {
         if (bindingResult.hasErrors()) {
             return "addEvent";
         }
-        eventRepository.save(event);
         User user = (User) session.getAttribute("loggedUser");
+        event.getParticipants().add(user);
+        eventRepository.save(event);
         EventGroups eventGroups = new EventGroups();
         eventGroups.setEvent(event);
         eventGroups.setUser(user);
@@ -71,8 +74,54 @@ public class EventController {
 
     //event manager
     @GetMapping(value = "/eventManager")
-    public String eventManagerGet(){
+    public String eventManagerGet(@RequestParam String eventId, Model model) {
+        Event event = eventRepository.getEventById(Long.parseLong(eventId));
+        model.addAttribute("event", event);
         return "eventManager";
     }
 
+    //adding event participants
+    @GetMapping(value = "/addParticipants")
+    public String addParticipantGet(Model model, @RequestParam String eventId,
+                                    @RequestParam(required = false) String success) {
+        String asuccess = "" + success;
+        if (asuccess.equals("false")) {
+            model.addAttribute("success", false);
+        }
+        model.addAttribute("event", eventRepository.getEventById(Long.parseLong(eventId)));
+
+        return "addParticipants";
+    }
+
+    @PostMapping(value = "/addParticipants")
+    public String addParticipantsPost(@RequestParam String participantNick, Model model, @RequestParam String eventId) {
+        boolean success = true;
+        if (participantNick == null || participantNick.trim().equals("")) {
+            success = false;
+        }
+
+        if (success) {
+            User participant = userRepository.getByNick(participantNick);
+            if (participant == null) {
+                success = false;
+            }
+        }
+
+        if (!success) {
+            model.addAttribute("success", false);
+            return "redirect:/addParticipants" + "?eventId=" + eventId;
+        }
+
+        Event event = eventRepository.getEventById(Long.parseLong(eventId));
+
+        if(event.getParticipants().contains(userRepository.getByNick(participantNick))){
+            model.addAttribute("success", false);
+            return "redirect:/addParticipants" + "?eventId=" + eventId + "&success=false";
+        }
+
+        event.getParticipants().add(userRepository.getByNick(participantNick));
+        eventRepository.save(event);
+
+        return "redirect:/addParticipants" + "?eventId=" + eventId;
+    }
 }

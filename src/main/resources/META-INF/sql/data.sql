@@ -1,1 +1,1 @@
-insert into User (email, nick, password) values ('sws@sws.pl', 'nope', '1231231');
+insert into User (email, nick, password) values ('sws@sws.pl', 'nope', '1231231'), ('asd@asd.pl', 'Testownik', '1231231'), ('asd@asd.com', 'Testowniczek', '1231231');
