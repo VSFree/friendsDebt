@@ -1,0 +1,1 @@
+insert into User (email, nick, password) values ('sws@sws.pl', 'nope', '1231231');

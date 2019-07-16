@@ -16,7 +16,8 @@
 
 <%@include file="./fragments/header.jspf" %>
 
-<div class="container">
+<div class="cont">
+    <h2>Register</h2>
     <form:form method="post" modelAttribute="user" action="register">
 
         Nick: <form:input path="nick"/>

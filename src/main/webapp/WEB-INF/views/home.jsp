@@ -8,8 +8,8 @@
 <body>
 <%@include file="./fragments/header.jspf" %>
 
-<div class="container">
-Welcome ;/
+<div class="cont">
+Domownik here
 
 </div>
 

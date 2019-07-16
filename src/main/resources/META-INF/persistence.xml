@@ -13,8 +13,8 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
             <property name="javax.persistence.schema-generation.database.action"
                       value="drop-and-create"/>
 
-<!--            <property name="javax.persistence.sql-load-script-source"-->
-<!--                      value="META-INF/sql/data.sql"/>-->
+            <property name="javax.persistence.sql-load-script-source"
+                      value="META-INF/sql/data.sql"/>
 
             <property name="hibernate.hbm2ddl.auto" value="none"/>
             <property name="hibernate.show_sql" value="true"/>

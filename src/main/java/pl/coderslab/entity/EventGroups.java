@@ -15,7 +15,6 @@ public class EventGroups {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @OneToOne
     @JoinColumn(name = "buyer")
     private User user;
