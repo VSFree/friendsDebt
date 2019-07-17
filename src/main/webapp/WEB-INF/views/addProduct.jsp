@@ -27,7 +27,7 @@
         <form:errors path="price"/><br>
 
 
-        <form:checkboxes path="participantIds" items="${participants}" itemValue="id" itemLabel="nick"/>
+        <form:checkboxes path="participantIds" items="${participants}" itemValue="id" itemLabel="nick"/><br>
 <%--        <c:forEach items="${participants}" var="participant">--%>
 <%--            ${participant.nick}: <input type="checkbox" name="participants" value="${participant.id}"><br>--%>
 <%--        </c:forEach>--%>

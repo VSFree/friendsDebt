@@ -29,7 +29,7 @@ public class EventGroups {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @ManyToMany
-    @JoinTable(name = "creditors")
+    @JoinTable(name = "debtors")
     private List<User> users = new ArrayList<>();
 
 

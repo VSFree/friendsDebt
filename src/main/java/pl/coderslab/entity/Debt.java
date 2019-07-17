@@ -23,8 +23,14 @@ public class Debt {
         this.id = id;
     }
 
-    public void setCreditor(User creditor) {
-        this.user = creditor;
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setReturned(Double returned) {
@@ -39,9 +45,7 @@ public class Debt {
         return id;
     }
 
-    public User getCreditor() {
-        return user;
-    }
+
 
     public Double getReturned() {
         return returned;

@@ -16,7 +16,14 @@
 <div class="cont">
     <h2>${event.name}</h2><br>
     <button onClick="document.location.href='/addProduct?eventId=${event.id}'">Add product</button>
-    <button onClick="document.location.href='/addParticipants?eventId=${event.id}'">Add participants</button>
+    <button onClick="document.location.href='/addParticipants?eventId=${event.id}'">Add participants</button><br>
+
+    My debtors:
+    <table>
+        <th>Debtor</th>
+        <th>Product</th>
+        <th>Price</th>
+    </table>
 </div>
 </body>
 </html>

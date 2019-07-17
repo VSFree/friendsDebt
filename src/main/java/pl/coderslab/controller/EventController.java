@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.entity.Event;
 import pl.coderslab.entity.EventGroups;
+import pl.coderslab.entity.Product;
 import pl.coderslab.entity.User;
 import pl.coderslab.repository.EventGroupsRepository;
 import pl.coderslab.repository.EventRepository;
+import pl.coderslab.repository.ProductRepository;
 import pl.coderslab.repository.UserRepository;
 
 import javax.servlet.http.HttpSession;
@@ -26,19 +28,24 @@ public class EventController {
     private EventRepository eventRepository;
     private EventGroupsRepository eventGroupsRepository;
     private UserRepository userRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    public EventController(EventRepository eventRepository, EventGroupsRepository eventGroupsRepository, UserRepository userRepository) {
+    public EventController(EventRepository eventRepository,
+                           EventGroupsRepository eventGroupsRepository,
+                           UserRepository userRepository,
+                           ProductRepository productRepository) {
         this.eventRepository = eventRepository;
         this.eventGroupsRepository = eventGroupsRepository;
         this.userRepository = userRepository;
+        this.productRepository = productRepository;
     }
 
     //all events
     @GetMapping(value = "/events")
     public String displayEvents(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedUser");
-        List<EventGroups> eventGroupsList = eventGroupsRepository.getEventGroupsByUser(user);
+        List<EventGroups> eventGroupsList = eventGroupsRepository.getEventGroupsByUserId(user.getId());
         List<Event> eventList = new ArrayList<>();
         for (int i = 0; i < eventGroupsList.size(); i++) {
             Long id = eventGroupsList.get(i).getId();
@@ -74,11 +81,23 @@ public class EventController {
 
     //event manager
     @GetMapping(value = "/eventManager")
-    public String eventManagerGet(@RequestParam String eventId, Model model) {
+    public String eventManagerGet(@RequestParam String eventId, Model model, HttpSession session) {
         Event event = eventRepository.getEventById(Long.parseLong(eventId));
         model.addAttribute("event", event);
+
+        User buyer = (User) session.getAttribute("loggedUser");
+        List<EventGroups> eventGroupsList = eventGroupsRepository.getEventGroupsByEventAndUser(event, buyer);
+
+        List<Product> productsList = new ArrayList<>();
+
+        for (EventGroups eventGroup : eventGroupsList) {
+            productsList.addAll(productRepository.getProductsByEventGroupId(eventGroup));
+        }
+        //model.addAttribute("products", productsList)
+
         return "eventManager";
     }
+
 
     //adding event participants
     @GetMapping(value = "/addParticipants")
@@ -114,7 +133,7 @@ public class EventController {
 
         Event event = eventRepository.getEventById(Long.parseLong(eventId));
         User check = userRepository.getByNick(participantNick);
-        if(event.getParticipants().contains(check)){
+        if (event.getParticipants().contains(check)) {
             model.addAttribute("success", false);
             return "redirect:/addParticipants" + "?eventId=" + eventId;
         }

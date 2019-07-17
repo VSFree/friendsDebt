@@ -7,14 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.coderslab.entity.Event;
-import pl.coderslab.entity.EventGroups;
-import pl.coderslab.entity.Product;
-import pl.coderslab.entity.User;
-import pl.coderslab.repository.EventGroupsRepository;
-import pl.coderslab.repository.EventRepository;
-import pl.coderslab.repository.ProductRepository;
-import pl.coderslab.repository.UserRepository;
+import pl.coderslab.entity.*;
+import pl.coderslab.repository.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -28,14 +22,17 @@ public class ProductController {
     private EventGroupsRepository eventGroupsRepository;
     private UserRepository userRepository;
     private ProductRepository productRepository;
+    private DebtRepository debtRepository;
 
     @Autowired
     public ProductController(EventRepository eventRepository, EventGroupsRepository eventGroupsRepository,
-                             UserRepository userRepository, ProductRepository productRepository) {
+                             UserRepository userRepository, ProductRepository productRepository,
+                             DebtRepository debtRepository) {
         this.eventRepository = eventRepository;
         this.eventGroupsRepository = eventGroupsRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
+        this.debtRepository = debtRepository;
     }
 
     @GetMapping("/addProduct")
@@ -67,10 +64,10 @@ public class ProductController {
 
         List<EventGroups> buyerEventGrouops = new ArrayList<>();
         EventGroups found = null;
-        if (eventGroupsRepository.getEventGroupsByUser(buyer).isEmpty()) {
+        if (eventGroupsRepository.getEventGroupsByUserId(buyer.getId()).isEmpty()) {
             eventGroupsRepository.save(eventGroup);
         } else {
-            buyerEventGrouops = eventGroupsRepository.getEventGroupsByUser(buyer);
+            buyerEventGrouops = eventGroupsRepository.getEventGroupsByUserId(buyer.getId());
             for (EventGroups eventGroups : buyerEventGrouops) {
                 if (eventGroups.getEvent().getId() != Long.parseLong(eventId)) {
                     buyerEventGrouops.remove(eventGroups);
@@ -94,6 +91,20 @@ public class ProductController {
             product.setEventGroupId(eventGroup);
             eventGroupsRepository.save(eventGroup);
             productRepository.save(product);
+        }
+
+
+        if (product.getId() != null) {
+            for (User user : eventGroupsRepository.getEventGroupById(product.getEventGroupId().getId()).getUsers()) {
+                Debt debt = new Debt();
+                debt.setEventGroup(product.getEventGroupId());
+                debt.setReturned(0.0);
+                debt.setUser(user);
+//            double debtorsForProduct = eventGroupsRepository.getEventGroupById(product.getEventGroupId().getId()).getUsers().size();
+//            double pricePerDebtor = product.getPrice()/debtorsForProduct;
+                debtRepository.save(debt);
+            }
+
         }
 
         return "redirect:/addProduct?eventId=" + eventId;
