@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.entity.Event;
 import pl.coderslab.entity.EventGroups;
@@ -88,12 +87,14 @@ public class EventController {
         User buyer = (User) session.getAttribute("loggedUser");
         List<EventGroups> eventGroupsList = eventGroupsRepository.getEventGroupsByEventAndUser(event, buyer);
 
-        List<Product> productsList = new ArrayList<>();
-
-        for (EventGroups eventGroup : eventGroupsList) {
-            productsList.addAll(productRepository.getProductsByEventGroupId(eventGroup));
-        }
-        //model.addAttribute("products", productsList)
+//        List<Product> productsList = new ArrayList<>();
+//
+//        for (EventGroups eventGroup : eventGroupsList) {
+//            productsList.addAll(productRepository.getProductsByEventGroupId(eventGroup));
+//        }
+//
+//        model.addAttribute("products", productsList)
+        model.addAttribute("eventGroups", eventGroupsList);
 
         return "eventManager";
     }

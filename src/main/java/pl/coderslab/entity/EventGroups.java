@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class EventGroups {
@@ -32,7 +31,18 @@ public class EventGroups {
     @JoinTable(name = "debtors")
     private List<User> users = new ArrayList<>();
 
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "eventGroupId")
+    private List<Product> products = new ArrayList<>();
 
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     public void setId(Long id) {
         this.id = id;

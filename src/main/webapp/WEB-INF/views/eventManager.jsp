@@ -16,14 +16,29 @@
 <div class="cont">
     <h2>${event.name}</h2><br>
     <button onClick="document.location.href='/addProduct?eventId=${event.id}'">Add product</button>
-    <button onClick="document.location.href='/addParticipants?eventId=${event.id}'">Add participants</button><br>
+    <button onClick="document.location.href='/addParticipants?eventId=${event.id}'">Add participants</button>
+    <br>
 
-    My debtors:
+    <h3>Products I bought:</h3>
+
     <table>
-        <th>Debtor</th>
-        <th>Product</th>
-        <th>Price</th>
+
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+        </tr>
+
+        <c:forEach items="${eventGroups}" var="eventGroup">
+            <tr>
+                <c:forEach items="${eventGroup.products}" var="product">
+                    <td>${product.getName()}</td>
+                    <td>${product.getPrice()}</td>
+                </c:forEach>
+            </tr>
+        </c:forEach>
+
     </table>
+
 </div>
 </body>
 </html>

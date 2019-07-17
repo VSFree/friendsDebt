@@ -36,6 +36,7 @@
         <form:hidden path="id"/>
         <input type="submit" value="Add product">
     </form:form>
+    <button onClick="document.location.href='/eventManager?eventId=${event.id}'">Go back</button>
 </div>
 </body>
 </html>
