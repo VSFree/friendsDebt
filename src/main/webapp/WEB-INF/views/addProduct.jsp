@@ -11,25 +11,13 @@
 <head>
     <title>Add product</title>
     <%@include file="./fragments/head.jspf" %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-        var buttonAdd = $("section.creditorAdd button")
-
-        buttonAdd.on("click", function () {
-            var newInput = $("<input type='text' name='creditors'/><br>")
-
-            $("section.appender").append(newInput)
-        })
-    </script>
 </head>
 <body>
 <%@include file="./fragments/header.jspf" %>
 <div class="cont">
 
     <h2>Add product to ${event.name}</h2> <br>
-    <section class="creditorAdd">
-        <button>Add creditor</button>
-    </section>
+
     <form:form method="post" modelAttribute="product" action="addProduct">
 
         Product name: <form:input path="name"/>
@@ -38,7 +26,12 @@
         Price: <form:input path="price"/>
         <form:errors path="price"/><br>
 
-        <section class="appender">Creditors: </section><input type="text" name="creditors"/><br>
+
+        <form:checkboxes path="participantIds" items="${participants}" itemValue="id" itemLabel="nick"/>
+<%--        <c:forEach items="${participants}" var="participant">--%>
+<%--            ${participant.nick}: <input type="checkbox" name="participants" value="${participant.id}"><br>--%>
+<%--        </c:forEach>--%>
+        <input type="hidden" value="${event.id}" name="eventId">
 
         <form:hidden path="id"/>
         <input type="submit" value="Add product">

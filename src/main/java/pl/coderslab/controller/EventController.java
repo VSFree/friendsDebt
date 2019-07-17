@@ -113,10 +113,10 @@ public class EventController {
         }
 
         Event event = eventRepository.getEventById(Long.parseLong(eventId));
-
-        if(event.getParticipants().contains(userRepository.getByNick(participantNick))){
+        User check = userRepository.getByNick(participantNick);
+        if(event.getParticipants().contains(check)){
             model.addAttribute("success", false);
-            return "redirect:/addParticipants" + "?eventId=" + eventId + "&success=false";
+            return "redirect:/addParticipants" + "?eventId=" + eventId;
         }
 
         event.getParticipants().add(userRepository.getByNick(participantNick));

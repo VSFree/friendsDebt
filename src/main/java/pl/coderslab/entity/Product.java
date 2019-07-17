@@ -21,6 +21,17 @@ public class Product {
     @JoinColumn(name = "event_group_id")
     private EventGroups eventGroupId;
 
+    @Transient
+    private List<Long> participantIds;
+
+    public List<Long> getParticipantIds() {
+        return participantIds;
+    }
+
+    public void setParticipantIds(List<Long> participantIds) {
+        this.participantIds = participantIds;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
