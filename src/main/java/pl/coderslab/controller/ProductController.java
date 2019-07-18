@@ -13,6 +13,7 @@ import pl.coderslab.repository.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -68,11 +69,14 @@ public class ProductController {
             eventGroupsRepository.save(eventGroup);
         } else {
             buyerEventGrouops = eventGroupsRepository.getEventGroupsByUserId(buyer.getId());
-            for (EventGroups eventGroups : buyerEventGrouops) {
+            Iterator<EventGroups> it = buyerEventGrouops.iterator();
+            while (it.hasNext()){
+                EventGroups eventGroups = it.next();
                 if (eventGroups.getEvent().getId() != Long.parseLong(eventId)) {
-                    buyerEventGrouops.remove(eventGroups);
+                    it.remove();
                 }
             }
+//
             for (EventGroups eventGroups : buyerEventGrouops) {
                 List<User> users = eventGroups.getUsers();
 

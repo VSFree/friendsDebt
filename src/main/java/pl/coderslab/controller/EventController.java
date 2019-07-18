@@ -125,17 +125,18 @@ public class EventController {
             }
             Double addPrice = 0.0;
             for (User user : eventGroup.getUsers()) {
-                if (user.getNick().equals(buyer.getNick())) {
-                    for (Product product : eventGroup.getProducts()) {
-                        addPrice += (product.getPrice() / eventGroup.getUsers().size());
-                    }
+                if (!user.getNick().equals(buyer.getNick())) {
+                    continue;
                 }
-                if (creditorMap.keySet().contains(user.getNick())) {
-                    addPrice += creditorMap.get(user.getNick());
-                    creditorMap.replace(user.getNick(), addPrice);
+                for (Product product : eventGroup.getProducts()) {
+                    addPrice += (product.getPrice() / eventGroup.getUsers().size());
+                }
+                if (creditorMap.keySet().contains(eventGroup.getUser().getNick())) {
+                    addPrice += creditorMap.get(eventGroup.getUser().getNick());
+                    creditorMap.replace(eventGroup.getUser().getNick(), addPrice);
                 } else {
                     if (addPrice > 0) {
-                        creditorMap.put(user.getNick(), addPrice);
+                        creditorMap.put(eventGroup.getUser().getNick(), addPrice);
                     }
                 }
             }
