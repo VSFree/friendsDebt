@@ -21,7 +21,7 @@
 
     <h3>Products I bought:</h3>
 
-    <table>
+    <table border="1px">
 
         <tr>
             <th>Product</th>
@@ -37,6 +37,21 @@
             </tr>
         </c:forEach>
 
+    </table>
+
+    <br><br>
+
+    <table border="1px">
+        <tr>
+            <th>User</th>
+            <th>Debt</th>
+        </tr>
+        <c:forEach items="${debtorsMap}" var="debtor">
+            <tr>
+            <td>${debtor.key}</td>
+            <td>${debtor.value}</td>
+            </tr>
+        </c:forEach>
     </table>
 
 </div>

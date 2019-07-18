@@ -7,18 +7,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import pl.coderslab.entity.Event;
-import pl.coderslab.entity.EventGroups;
-import pl.coderslab.entity.Product;
-import pl.coderslab.entity.User;
-import pl.coderslab.repository.EventGroupsRepository;
-import pl.coderslab.repository.EventRepository;
-import pl.coderslab.repository.ProductRepository;
-import pl.coderslab.repository.UserRepository;
+import pl.coderslab.entity.*;
+import pl.coderslab.repository.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -28,16 +23,19 @@ public class EventController {
     private EventGroupsRepository eventGroupsRepository;
     private UserRepository userRepository;
     private ProductRepository productRepository;
+    private DebtRepository debtRepository;
 
     @Autowired
     public EventController(EventRepository eventRepository,
                            EventGroupsRepository eventGroupsRepository,
                            UserRepository userRepository,
-                           ProductRepository productRepository) {
+                           ProductRepository productRepository,
+                           DebtRepository debtRepository) {
         this.eventRepository = eventRepository;
         this.eventGroupsRepository = eventGroupsRepository;
         this.userRepository = userRepository;
         this.productRepository = productRepository;
+        this.debtRepository = debtRepository;
     }
 
     //all events
@@ -87,14 +85,35 @@ public class EventController {
         User buyer = (User) session.getAttribute("loggedUser");
         List<EventGroups> eventGroupsList = eventGroupsRepository.getEventGroupsByEventAndUser(event, buyer);
 
-//        List<Product> productsList = new ArrayList<>();
-//
-//        for (EventGroups eventGroup : eventGroupsList) {
-//            productsList.addAll(productRepository.getProductsByEventGroupId(eventGroup));
-//        }
-//
-//        model.addAttribute("products", productsList)
         model.addAttribute("eventGroups", eventGroupsList);
+
+        HashMap<String, Double> debtorMap = new HashMap<String, Double>();
+
+        for (EventGroups eventGroup : eventGroupsList) {
+            for (User user : eventGroup.getUsers()){
+                if(user.getNick().equals(buyer.getNick())){
+                    continue;
+                }
+                if(debtorMap.keySet().contains(user.getNick())){
+                    Double addPrice = 0.0;
+                    for(Product product : eventGroup.getProducts()){
+                        addPrice += (product.getPrice()/eventGroup.getUsers().size());
+                    }
+                    addPrice += debtorMap.get(user.getNick());
+                    debtorMap.replace(user.getNick(), addPrice);
+
+                } else {
+                    Double addPrice = 0.0;
+                    for(Product product : eventGroup.getProducts()){
+                        addPrice += (product.getPrice()/eventGroup.getUsers().size());
+                    }
+                    debtorMap.put(user.getNick(), addPrice);
+                }
+            }
+        }
+
+        model.addAttribute("debtorsMap", debtorMap);
+
 
         return "eventManager";
     }

@@ -10,3 +10,7 @@ ul.menu li {
     width: 80%;
     margin: auto;
 }
+
+body {
+    background-image: url(/resources/images/cash-coins-currency-40140.jpg);
+}

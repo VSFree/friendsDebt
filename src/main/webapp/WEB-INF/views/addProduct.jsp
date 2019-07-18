@@ -28,9 +28,9 @@
 
 
         <form:checkboxes path="participantIds" items="${participants}" itemValue="id" itemLabel="nick"/><br>
-<%--        <c:forEach items="${participants}" var="participant">--%>
-<%--            ${participant.nick}: <input type="checkbox" name="participants" value="${participant.id}"><br>--%>
-<%--        </c:forEach>--%>
+        <%--        <c:forEach items="${participants}" var="participant">--%>
+        <%--            ${participant.nick}: <input type="checkbox" name="participants" value="${participant.id}"><br>--%>
+        <%--        </c:forEach>--%>
         <input type="hidden" value="${event.id}" name="eventId">
 
         <form:hidden path="id"/>
