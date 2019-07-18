@@ -11,4 +11,5 @@ public interface EventGroupsRepository extends JpaRepository<EventGroups, Long> 
     List<EventGroups> getEventGroupsByUserId(Long id);
     List<EventGroups> getEventGroupsByEventAndUser(Event event, User user);
     EventGroups getEventGroupById(Long id);
+    List<EventGroups> getEventGroupsByEventIdAndUsersId(Long eventId, Long userId);
 }

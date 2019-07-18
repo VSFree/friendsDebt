@@ -62,6 +62,22 @@
             <input type="submit" value="Update">
         </form>
     </div>
+    <br>
+    <div>
+        <h3>My debts:</h3>
+        <table border="1px">
+            <tr>
+                <th>User</th>
+                <th>Debt</th>
+            </tr>
+            <c:forEach items="${creditors}" var="creditor">
+                <tr>
+                    <td>${creditor.key}</td>
+                    <td>${creditor.value}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 
 </div>
 </body>

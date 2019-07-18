@@ -52,7 +52,6 @@ public class EventController {
 //        }
         eventList.addAll(eventRepository.getEventsByParticipantsId(user.getId()));
 
-
         model.addAttribute("eventList", eventList);
         return "events";
     }
@@ -93,34 +92,60 @@ public class EventController {
         HashMap<String, Double> debtorMap = new HashMap<String, Double>();
 
         for (EventGroups eventGroup : eventGroupsList) {
-            for (User user : eventGroup.getUsers()){
-                if(user.getNick().equals(buyer.getNick())){
+            for (User user : eventGroup.getUsers()) {
+                if (user.getNick().equals(buyer.getNick())) {
                     continue;
                 }
-                if(debtorMap.keySet().contains(user.getNick())){
+                if (debtorMap.keySet().contains(user.getNick())) {
                     Double addPrice = 0.0;
-                    for(Product product : eventGroup.getProducts()){
-                        addPrice += (product.getPrice()/eventGroup.getUsers().size());
+                    for (Product product : eventGroup.getProducts()) {
+                        addPrice += (product.getPrice() / eventGroup.getUsers().size());
                     }
                     addPrice += debtorMap.get(user.getNick());
                     debtorMap.replace(user.getNick(), addPrice);
 
                 } else {
                     Double addPrice = 0.0;
-                    for(Product product : eventGroup.getProducts()){
-                        addPrice += (product.getPrice()/eventGroup.getUsers().size());
+                    for (Product product : eventGroup.getProducts()) {
+                        addPrice += (product.getPrice() / eventGroup.getUsers().size());
                     }
                     debtorMap.put(user.getNick(), addPrice);
                 }
             }
         }
-
         model.addAttribute("debtorsMap", debtorMap);
+
+        HashMap<String, Double> creditorMap = new HashMap<>();
+        List<EventGroups> eventGroupList =
+                eventGroupsRepository.getEventGroupsByEventIdAndUsersId(event.getId(), buyer.getId());
+
+        for (EventGroups eventGroup : eventGroupList) {
+            if (eventGroup.getUser().getNick().equals(buyer.getNick())) {
+                continue;
+            }
+            Double addPrice = 0.0;
+            for (User user : eventGroup.getUsers()) {
+                if (user.getNick().equals(buyer.getNick())) {
+                    for (Product product : eventGroup.getProducts()) {
+                        addPrice += (product.getPrice() / eventGroup.getUsers().size());
+                    }
+                }
+                if (creditorMap.keySet().contains(user.getNick())) {
+                    addPrice += creditorMap.get(user.getNick());
+                    creditorMap.replace(user.getNick(), addPrice);
+                } else {
+                    if (addPrice > 0) {
+                        creditorMap.put(user.getNick(), addPrice);
+                    }
+                }
+            }
+        }
+
+        model.addAttribute("creditors", creditorMap);
+
 
         return "eventManager";
     }
-
-
 
 
     //adding event participants
