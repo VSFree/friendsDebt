@@ -44,12 +44,15 @@ public class EventController {
         User user = (User) session.getAttribute("loggedUser");
         List<EventGroups> eventGroupsList = eventGroupsRepository.getEventGroupsByUserId(user.getId());
         List<Event> eventList = new ArrayList<>();
-        for (int i = 0; i < eventGroupsList.size(); i++) {
-            Long id = eventGroupsList.get(i).getId();
-            if (!eventList.contains(eventRepository.getEventById(id))) {
-                eventList.add(eventRepository.getEventById(id));
-            }
-        }
+//        for (int i = 0; i < eventGroupsList.size(); i++) {
+//            Long id = eventGroupsList.get(i).getId();
+//            if (!eventList.contains(eventRepository.getEventById(id))) {
+//                eventList.add(eventRepository.getEventById(id));
+//            }
+//        }
+        eventList.addAll(eventRepository.getEventsByParticipantsId(user.getId()));
+
+
         model.addAttribute("eventList", eventList);
         return "events";
     }
@@ -114,9 +117,10 @@ public class EventController {
 
         model.addAttribute("debtorsMap", debtorMap);
 
-
         return "eventManager";
     }
+
+
 
 
     //adding event participants

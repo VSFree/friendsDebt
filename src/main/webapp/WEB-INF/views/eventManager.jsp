@@ -39,7 +39,7 @@
 
     </table>
 
-    <br><br>
+    <br>
 
     <table border="1px">
         <tr>
@@ -53,6 +53,15 @@
             </tr>
         </c:forEach>
     </table>
+    <br>
+    <div>
+        <form>
+            <h6>Repayment:</h6><br>
+            Nick:<input type="text" name="nickRepay"><br>
+            How much:<input type="number" name="amountRepay"><br>
+            <input type="submit" value="Update">
+        </form>
+    </div>
 
 </div>
 </body>

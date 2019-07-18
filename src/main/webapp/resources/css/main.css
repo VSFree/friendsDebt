@@ -12,5 +12,9 @@ ul.menu li {
 }
 
 body {
-    background-image: url(/resources/images/cash-coins-currency-40140.jpg);
+    background: url(/resources/images/cash-coins-currency-40140.jpg) no-repeat center center fixed;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
 }
