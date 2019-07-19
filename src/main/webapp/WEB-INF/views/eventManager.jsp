@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: slawek
@@ -15,65 +16,93 @@
 <%@include file="./fragments/header.jspf" %>
 <div class="cont">
     <h2>${event.name}</h2><br>
-    <button onClick="document.location.href='/addProduct?eventId=${event.id}'">Add product</button>
-    <button onClick="document.location.href='/addParticipants?eventId=${event.id}'">Add participants</button>
+    <button onClick="document.location.href='/addProduct?eventId=${event.id}'"
+            class="btn btn-outline-primary">Add product
+    </button>
+    <button onClick="document.location.href='/addParticipants?eventId=${event.id}'"
+            class="btn btn-outline-primary">Add participants
+    </button>
     <br>
 
     <h3>Products I bought:</h3>
-
-    <table border="1px">
-
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-        </tr>
-
-        <c:forEach items="${eventGroups}" var="eventGroup">
+    <div class="widthform form-floater-left">
+        <table class="table table-sm">
+            <thead>
             <tr>
-                <c:forEach items="${eventGroup.products}" var="product">
-                    <td>${product.getName()}</td>
-                    <td>${product.getPrice()}</td>
-                </c:forEach>
+                <th>Product</th>
+                <th>Price</th>
             </tr>
-        </c:forEach>
+            </thead>
+            <c:forEach items="${eventGroups}" var="eventGroup">
+                <tr>
+                    <c:forEach items="${eventGroup.products}" var="product">
+                        <td>${product.getName()}</td>
+                        <td>
+                            <fmt:formatNumber maxFractionDigits="2"
+                                              minFractionDigits="2">
+                                ${product.getPrice()}
+                            </fmt:formatNumber>
+                        </td>
+                    </c:forEach>
+                </tr>
+            </c:forEach>
 
-    </table>
-
-    <br>
-
-    <table border="1px">
-        <tr>
-            <th>User</th>
-            <th>Debt</th>
-        </tr>
-        <c:forEach items="${debtorsMap}" var="debtor">
-            <tr>
-            <td>${debtor.key}</td>
-            <td>${debtor.value}</td>
-            </tr>
-        </c:forEach>
-    </table>
-    <br>
-    <div>
-        <form>
-            <h6>Repayment:</h6><br>
-            Nick:<input type="text" name="nickRepay"><br>
-            How much:<input type="number" name="amountRepay"><br>
-            <input type="submit" value="Update">
-        </form>
+        </table>
     </div>
     <br>
-    <div>
-        <h3>My debts:</h3>
-        <table border="1px">
+    <div class="widthform">
+        <table class="table table-sm">
+            <thead>
             <tr>
                 <th>User</th>
                 <th>Debt</th>
             </tr>
+            </thead>
+            <c:forEach items="${debtorsMap}" var="debtor">
+                <tr>
+                    <td>${debtor.key}</td>
+                    <td>
+                        <fmt:formatNumber maxFractionDigits="2"
+                                          minFractionDigits="2">
+                            ${debtor.value}
+                        </fmt:formatNumber>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+    <br>
+    <div class="widthform">
+        <form>
+            <h5>Repayment:</h5><br>
+            <div class="form-group">
+                Nick:<input type="text" name="nickRepay" class="form-control widthform"><br>
+            </div>
+            <div class="form-group">
+                How much:<input type="number" name="amountRepay" class="form-control widthform"><br>
+            </div>
+            <input type="submit" value="Update" class="btn btn-primary btn-lg btn-block">
+        </form>
+    </div>
+    <br>
+    <div class="widthform">
+        <h3>My debts:</h3>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Debt</th>
+            </tr>
+            </thead>
             <c:forEach items="${creditors}" var="creditor">
                 <tr>
                     <td>${creditor.key}</td>
-                    <td>${creditor.value}</td>
+                    <td>
+                        <fmt:formatNumber maxFractionDigits="2"
+                                          minFractionDigits="2">
+                            ${creditor.value}
+                        </fmt:formatNumber>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

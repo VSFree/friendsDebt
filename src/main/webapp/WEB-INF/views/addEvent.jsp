@@ -19,12 +19,14 @@
 <div class="cont">
     <h2>Add new event</h2>
     <form:form method="post" modelAttribute="event" action="addEvent">
-
-        Event name: <form:input path="name"/>
-        <form:errors path="name"/> <br>
-
+        <div class="form-group">
+            Event name: <form:input path="name" class="form-control widthform"/>
+            <form:errors path="name"/> <br>
+        </div>
         <form:hidden path="id"/>
-        <input type="submit" value="Create">
+        <div class="widthform">
+            <input type="submit" value="Create" class="btn btn-primary btn-lg btn-block">
+        </div>
     </form:form>
 
 </div>

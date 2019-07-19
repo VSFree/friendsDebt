@@ -19,20 +19,25 @@
 <div class="cont">
     <h2>Register</h2>
     <form:form method="post" modelAttribute="user" action="register">
-
-        Nick: <form:input path="nick"/>
-        <form:errors path="nick"/> <br>
-
-        Email: <form:input path="email"/>
-        <form:errors path="email"/><br>
-
-        Password: <form:password path="password"/>
-        <form:errors path="password"/><br>
-
-        Confirm password: <input type="password" name="confirmPassword"/><br>
-
+        <div class="form-group">
+            Nick: <form:input path="nick" class="form-control widthform"/>
+            <form:errors path="nick"/> <br>
+        </div>
+        <div class="form-group">
+            Email: <form:input path="email" class="form-control widthform"/>
+            <form:errors path="email"/><br>
+        </div>
+        <div class="form-group">
+            Password: <form:password path="password" class="form-control widthform"/>
+            <form:errors path="password"/><br>
+        </div>
+        <div class="form-group">
+            Confirm password: <input type="password" name="confirmPassword" class="form-control widthform"/><br>
+        </div>
         <form:hidden path="id"/>
-        <input type="submit" value="Register">
+        <div class="widthform">
+            <input type="submit" value="Register" class="btn btn-primary btn-lg btn-block">
+        </div>
     </form:form>
 </div>
 </body>

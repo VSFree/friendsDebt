@@ -15,15 +15,21 @@
 
 <%@include file="./fragments/header.jspf" %>
 <div class="cont">
-<h2>Login</h2>
-<c:if test="${success == false}">
-    <p>Login failed. Email or password is incorrect.</p>
-</c:if>
-<form method="post">
-    Email: <input type="email" name="email" required /><br />
-    Password: <input type="password" name="password" required /><br />
-    <input type="submit" value="Login" />
-</form>
+    <h2>Login</h2>
+    <c:if test="${success == false}">
+        <p>Login failed. Email or password is incorrect.</p>
+    </c:if>
+    <form method="post">
+        <div class="form-group">
+            Email: <input type="email" name="email" required class="form-control widthform"/><br/>
+        </div>
+        <div class="form-group">
+            Password: <input type="password" name="password" class="form-control widthform" required/><br/>
+        </div>
+        <div class="widthform">
+            <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block"/>
+        </div>
+    </form>
 </div>
 </body>
 </html>

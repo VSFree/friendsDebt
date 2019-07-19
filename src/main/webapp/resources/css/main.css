@@ -18,3 +18,14 @@ body {
     -o-background-size: contain;
     background-size: contain;
 }
+
+.widthform {
+    width: 30%;
+}
+
+.form-floater-right {
+    float:right;
+}
+.form-floater-left {
+    float:left;
+}

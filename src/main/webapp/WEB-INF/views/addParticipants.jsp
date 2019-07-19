@@ -22,12 +22,17 @@
     </c:if>
 
     <form method="post" action="addParticipants">
-        Nick: <input type="text" name="participantNick"><br>
+        <div class="form-group">
+            Nick: <input type="text" name="participantNick" class="form-control widthform"><br>
+        </div>
         <input type="hidden" value="${event.id}" name="eventId">
-        <input type="submit" value="Add">
+        <div class="widthform">
+            <input type="submit" value="Add" class="btn btn-primary btn-lg btn-block">
+        </div>
     </form>
     <br>
-    <button onClick="document.location.href='/eventManager?eventId=${event.id}'">Go back</button>
+    <button onClick="document.location.href='/eventManager?eventId=${event.id}'"
+            class="btn btn-outline-primary">Go back</button>
 
 </div>
 </body>

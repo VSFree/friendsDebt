@@ -19,24 +19,39 @@
     <h2>Add product to ${event.name}</h2> <br>
 
     <form:form method="post" modelAttribute="product" action="addProduct">
+        <div class="form-group">
+            Product name: <form:input path="name" class="form-control widthform"/>
+            <form:errors path="name"/> <br>
+        </div>
+        <div class="form-group">
+            Price: <form:input path="price" class="form-control widthform"/>
+            <form:errors path="price"/><br>
+        </div>
 
-        Product name: <form:input path="name"/>
-        <form:errors path="name"/> <br>
+        <c:forEach items="${participants}" var="participant">
+            <div class="form-check">
+                <label style="cursor:pointer">
+                    <form:checkbox path="participantIds" class="form-check-input" value="${participant.id}"/>
+                        ${participant.nick}
+                </label>
+            </div>
+        </c:forEach>
+        <br>
+        <%--        <div class="form-check">--%>
+        <%--            <form:checkboxes path="participantIds" items="${participants}"--%>
+        <%--                             itemValue="id" itemLabel="nick" class="form-check-input"/><br>--%>
+        <%--        </div>--%>
 
-        Price: <form:input path="price"/>
-        <form:errors path="price"/><br>
-
-
-        <form:checkboxes path="participantIds" items="${participants}" itemValue="id" itemLabel="nick"/><br>
-        <%--        <c:forEach items="${participants}" var="participant">--%>
-        <%--            ${participant.nick}: <input type="checkbox" name="participants" value="${participant.id}"><br>--%>
-        <%--        </c:forEach>--%>
         <input type="hidden" value="${event.id}" name="eventId">
 
         <form:hidden path="id"/>
-        <input type="submit" value="Add product">
+        <div class="widthform">
+            <input type="submit" value="Add product" class="btn btn-primary btn-lg btn-block">
+        </div>
     </form:form>
-    <button onClick="document.location.href='/eventManager?eventId=${event.id}'">Go back</button>
+    <button onClick="document.location.href='/eventManager?eventId=${event.id}'"
+            class="btn btn-outline-primary">Go back
+    </button>
 </div>
 </body>
 </html>

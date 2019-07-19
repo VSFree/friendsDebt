@@ -1,16 +1,16 @@
 <div class="cont">
-    <button onClick="document.location.href='/'">Home</button>
-    <button onClick="document.location.href='#'">About</button>
+    <button onClick="document.location.href='/'" class="btn btn-primary">Home</button>
+    <button onClick="document.location.href='#'" class="btn btn-primary">About</button>
     <c:choose>
         <c:when test="${empty email}">
-            <button onClick="document.location.href='/register'">Register</button>
-            <button onClick="document.location.href='/login'">Login</button>
+            <button onClick="document.location.href='/register'" class="btn btn-primary">Register</button>
+            <button onClick="document.location.href='/login'" class="btn btn-primary">Login</button>
 
             <h2>Welcome</h2>
         </c:when>
         <c:otherwise>
-            <button onClick="document.location.href='/events'">Events</button>
-            <button onClick="document.location.href='/logout'">Logout</button>
+            <button onClick="document.location.href='/events'" class="btn btn-primary">Events</button>
+            <button onClick="document.location.href='/logout'" class="btn btn-primary">Logout</button>
             <h2>Welcome, <c:out value="${loggedUser.nick}"/></h2>
         </c:otherwise>
     </c:choose>

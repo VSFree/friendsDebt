@@ -76,7 +76,7 @@ public class ProductController {
                     it.remove();
                 }
             }
-//
+
             for (EventGroups eventGroups : buyerEventGrouops) {
                 List<User> users = eventGroups.getUsers();
 

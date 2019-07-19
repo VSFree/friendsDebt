@@ -16,12 +16,12 @@
 <div class="cont">
     <h2>Events</h2>
 
-
-    <button onClick="document.location.href='/addEvent'">Add new event</button>
-
+    <div class="widthform">
+        <button onClick="document.location.href='/addEvent'" class="btn btn-outline-primary">Add new event</button>
+    </div>
     <h3>Your events:</h3>
     <c:forEach items="${eventList}" var="event">
-        <a href="/eventManager?eventId=${event.id}">${event.name}</a><br>
+        <button onClick="document.location.href='/eventManager?eventId=${event.id}'" class="btn btn-outline-primary">${event.name}</button><br>
     </c:forEach>
 </div>
 </body>

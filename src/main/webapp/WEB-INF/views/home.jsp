@@ -9,7 +9,7 @@
 <%@include file="./fragments/header.jspf" %>
 
 <div class="cont">
-Domownik here
+This text should persuade you to use this app.
 
 </div>
 
