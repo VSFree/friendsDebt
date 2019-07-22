@@ -1,6 +1,6 @@
 <div class="cont">
     <button onClick="document.location.href='/'" class="btn btn-primary">Home</button>
-    <button onClick="document.location.href='#'" class="btn btn-primary">About</button>
+    <button onClick="document.location.href='/about'" class="btn btn-primary">About</button>
     <c:choose>
         <c:when test="${empty email}">
             <button onClick="document.location.href='/register'" class="btn btn-primary">Register</button>
